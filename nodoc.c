@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <getopt.h>
+#include <unistd.h>
 
 static const struct option long_opts[] = {
+    {"version", no_argument, 0, 'v'},
     {"output", required_argument, 0, 'o'},
     {NULL, 0, 0, 0}
 };
@@ -10,9 +12,23 @@ int main(int argc, char** argv)
 {
     int ret;
     opterr = 0;
-    while((ret = getopt_long(argc, argv, "o:", long_opts, NULL)) != -1)
+    while((ret = getopt_long(argc, argv, "vo:", long_opts, NULL)) != -1)
     {
-        if(ret == 'o') {
+        if(ret == 'v') {
+            const char* user = getlogin();
+            if(!user)
+                user = "unknown";
+
+            // pypandoc needs this
+            printf("pandoc 3.1.9\n"
+                    "Features: +server +lua\n"
+                    "Scripting engine: Lua 5.4\n"
+                    "User data directory: /home/%s/.local/share/pandoc\n"
+                    "Copyright (C) 2006-2023 John MacFarlane. Web: https://pandoc.org\n"
+                    "This is free software; see the source for copying conditions. There is no\n"
+                    "warranty, not even for merchantability or fitness for a particular purpose.\n", user);
+            return 0;
+        } else if(ret == 'o') {
             FILE* f = fopen(optarg, "w");
             if(!f)
                 return 1;
