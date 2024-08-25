@@ -125,8 +125,8 @@ static const char* output_formats[] = {
 static const struct option long_opts[] = {
     {"version", no_argument, 0, 'v'},
     {"output", required_argument, 0, 'o'},
-    {"input-formats", no_argument, 0, INPUT_FORMATS_ARG},
-    {"output-formats", no_argument, 0, OUTPUT_FORMATS_ARG},
+    {"list-input-formats", no_argument, 0, INPUT_FORMATS_ARG},
+    {"list-output-formats", no_argument, 0, OUTPUT_FORMATS_ARG},
     {NULL, 0, 0, 0}
 };
 
